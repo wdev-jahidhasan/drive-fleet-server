@@ -30,12 +30,17 @@ async function run() {
     const db = client.db('drive-fleet');
     const CarCollection = db.collection('cars');
 
+    app.get('/cars', async (req, res) => {
+      const result = await CarCollection.find().toArray();
+      res.json(result);
+    })
+
     app.post('/cars', async (req, res) => {
       const carData = req.body
       console.log(carData);
       const result = await CarCollection.insertOne(carData)
       res.json(result)
-    })
+    });  
 
 
     await client.db("admin").command({ ping: 1 });
