@@ -30,6 +30,11 @@ async function run() {
     const db = client.db('drive-fleet');
     const CarCollection = db.collection('cars');
 
+    app.get('/popular', async (req, res) => {
+      const result = await CarCollection.find().limit(6).toArray();
+      res.json(result);
+    })
+
     app.get('/cars', async (req, res) => {
       const result = await CarCollection.find().toArray();
       res.json(result);
